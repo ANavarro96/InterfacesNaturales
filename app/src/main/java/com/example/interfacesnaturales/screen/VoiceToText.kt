@@ -43,9 +43,12 @@ fun SpeechToText(app: Application) {
         recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
     }
     // TODO: INTENTAR CAMBIAR ESTO
-    val voiceToText by lazy {
+    /*val voiceToText by lazy {
         VoiceToTextRecognizer(app)
-    }
+    }*/
+
+    val voiceToText =
+        VoiceToTextRecognizer(app)
 
     // Establecemos nuestro estado
     val state by voiceToText.state.collectAsState()

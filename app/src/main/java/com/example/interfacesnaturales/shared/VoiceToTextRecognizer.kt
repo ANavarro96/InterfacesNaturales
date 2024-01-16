@@ -115,17 +115,19 @@ class VoiceToTextRecognizer(
 
     override fun onResults(results: Bundle?) {
         // Aquí lo que hamos es pasar estos resultados a un string.
-        results
+        var textoResultado = results
             ?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
             ?.getOrNull(0)
-            ?.let { text ->
+
+        if (textoResultado != null) {
                 _state.update {
                     it.copy(
-                        textoHablado = text
+                        textoHablado = textoResultado
                     )
                 }
             }
     }
+
 
     // Llamad a estas funciones si las necesitariais para algo
     override fun onBeginningOfSpeech() {

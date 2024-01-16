@@ -15,8 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +34,7 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ListaSwipeable(){
+fun PagerSwipeable(){
     val fotitos = listOf(
         R.drawable.dk,
         R.drawable.luigi,
@@ -45,6 +43,8 @@ fun ListaSwipeable(){
     // Almacenamos el estado del pager
             val pagerState = rememberPagerState(pageCount = { fotitos.size })
             val scope = rememberCoroutineScope()
+    // Voy a usar una caja y no una columna porque quiero que la página esté al fondo, y los botones
+    // por encima. Se puede usar una columna tranquilamente si queréis otro estilo
             Box(modifier = Modifier.fillMaxSize()) {
                 // Este es el componente que permite establecer el pager horizontal, al que le paso:
                 // - El estado, declarado arriba
@@ -80,7 +80,8 @@ fun ListaSwipeable(){
 
                     )
                 }
-                // En esta caja
+                // En esta caja pongo los botones. Uso el offset para añadir espacio entre el borde
+                // de la pantalla.
                 Box(
                     modifier = Modifier
                         .offset(y = -(16).dp)
@@ -92,6 +93,8 @@ fun ListaSwipeable(){
                 ) {
                     IconButton(
                         onClick = {
+                            // Si se pulsa el botón de atrás, cambio la página a la anterior,
+                            // si es que no estoy en la primera.
                             scope.launch {
                                 pagerState.animateScrollToPage(
                                     pagerState.currentPage - 1
@@ -107,6 +110,8 @@ fun ListaSwipeable(){
                     }
                     IconButton(
                         onClick = {
+                            // Si se pulsa el botón de adelante, cambio la página a la siguiente,
+                            // si es que no estoy en la última.
                             scope.launch {
                                 pagerState.animateScrollToPage(
                                     pagerState.currentPage + 1
